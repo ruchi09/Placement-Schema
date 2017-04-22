@@ -1,1 +1,9 @@
+
+MUST VISIT BELOW LINK (IN CASE IF WE ARE COMBINING DATABASE)
+
 http://stackoverflow.com/questions/13484667/downloading-mysql-dump-from-command-line
+
+Anyways it is quite easy to retrieve data across databases. NO NEED OF COMBINING!
+It just requires two pointers (say conn and conn1) for two separate database instead of just one (conn).
+
+It works I verified
