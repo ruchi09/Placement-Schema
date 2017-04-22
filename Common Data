@@ -1,10 +1,10 @@
-Pranay send me stud skills and Richa job profile Delails so that I can ntegrate them
+Pranay send me student skills and Richa job profile Delails so that I can integrate them
 
 Some COMMON data to work with
 
+________________________________________________________________________________________________________________
+
 Roll Nos 
-
-
 (RollNo)           
 
 CED15I001
@@ -29,21 +29,63 @@ MDS16M001 //MASTERS IN MECH
 MDS16M002
 MDS16M003
 
+____________________________________________________________________________________________________________________
+
+RollNo   , Password
+
+CED15I001,qwert
+CED15I002,asdf
+CED15I003,qwert123
+COE15B001,zxcc1234
+COE15B002,lkjh0987
+COE15B003,bat99
+EVD15I001,cat12
+EVD15I002,gameofthrones12
+EVD15I003,apple77
+MDM15B001,box@77
+MDM15B002,ghjkl555
+MDM15B003,books90
+CDS15M001,water89             //MASTERS IN COMMUNICATION
+CDS15M002,black44*
+CDS15M003,mobile%23
+EDS16M001,aaaaaa00**           //MASTERS IN Elect
+EDS16M002,bbbbbb11$$
+EDS16M003,&230i9
+MDS16M001,mnbv09              //MASTERS IN MECH
+MDS16M002,plokij23
+MDS16M003,wires33
+
+
+
+_________________________________________________________________________________________________________________
 
 Companies
-
 (CID)
 
-1
-2
-3
-4
-5
-6
-7
-8
-9
+1 to 9
 
+_________________________________________________________________________________________________________________
+Company, Password
+ (CID)
+ 
+1, sssss123*
+2, bat75^
+3, mat&239
+4, hat10&rat
+5, cat55
+6, fat0909
+7, oat7575
+8, pat44
+9, sat*123
+
+_________________________________________________________________________________________________________
+
+
+(JobID)
+1 to 17
+
+
+__________________________________________________________________________________________________________
 
 COMPANY ID(INT) AND JOB ID (JobID INT)
 
@@ -65,7 +107,7 @@ COMPANY ID(INT) AND JOB ID (JobID INT)
 7, 4
 8, 18
 9, 16
-
+______________________________________________________________________________________________________________
 
 
 
