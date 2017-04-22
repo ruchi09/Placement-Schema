@@ -1,3 +1,5 @@
+// Password for admin is abc
+
 #include<stdio.h>
 #include<mysql.h>
 #include<stdlib.h>
@@ -8,181 +10,205 @@
   char q2[50];
   
 
-  MYSQL *conn;
+   MYSQL *conn,*conn1;
    MYSQL_RES *res;
    MYSQL_ROW row;
 
    char *server = "localhost"; // localhost for accessing local mysql
    char *user = "root";// root for students
-   char *password = ""; /* set me first - pwd : iiitdm123 */ 
+   char *password = "ocean"; /* set me first - pwd : iiitdm123 */ 
    char *database = ""; // Here you need to enter the database name if you have already other wise leave it free.
 
-  
-  
-  
-void CompanyDatabase()
+
+
+
+void Job()
 {
-   system("clear");
-   int op=1,op1,flag;
-   
-   
-   
-   printf("\n\n\n\n Company Schema");
-   
-    mysql_query(conn,"use Company;"); // change database
- 
-      strcpy(query,"");
-      strcpy(q2,"");
-      flag=0;
-      printf("\n\n 1)Enter command\n 3)Exit\nEnter option no :");
-      scanf("%d",&op);
-      if(op==3)
-        return;
-      printf("\nEnter Query  (give ; after space) : ");
-       scanf("%s",q2);
-                    while(strcmp(q2,";")!=0)
-                    {
-                        strcat(query,q2);
-                        strcat(query," ");
-                        scanf("%s",q2);
-                    }
-                    
-  
-   
-   strcat(query,";");
-   printf("\nCommand Entered:  %s\n",query);
-   printf("\n\n\n");
-   if (mysql_query(conn,query)) 
-   {
+    conn = mysql_init(NULL);
+    system ("clear");
+    char val;
+    char jid[3];
+    
+    
+    if (!mysql_real_connect(conn, server,user, password, database, 0, NULL, 0)) 
+    {
       fprintf(stderr, "%s\n", mysql_error(conn));
       exit(1);
-   }
-   res = mysql_use_result(conn);
-
-   unsigned long *lengths;
-   unsigned int num_fields;
-
-
-         while ((row = mysql_fetch_row(res)) != NULL)
-          {
-            num_fields = mysql_num_fields(res);
-            lengths = mysql_fetch_lengths(res);
-            for(int i = 0; i < num_fields; i++)
-            {
-               //printf("%d  ",(int)lengths[i]);
-               //printf("%s\t",row[i]);
-               printf("%18.*s ", (int) lengths[i],row[i] ? row[i] : "NULL");
-               // printf("Column %u is %lu bytes in length.\n",i, lengths[i]);
-               	//printf("%s \n", row[i]);
-            }
-            printf("\n");
-         }
-   
- 
-
-   
-   
-
-   mysql_free_result(res);
-
-   
-
-}  
+    }
+    
+    mysql_query(conn,"use Admin;");
   
-  
-  
-  
-
-void SPPDatabase()
-{
-
-
-   int op=1,op1,flag;
-   
-  printf("\n\n\n\n Spp Schema");
-   
-   mysql_query(conn,"use SPP;");  //change database here
-   
-
-      strcpy(query,"");
-      strcpy(q2,"");
-      flag=0;
-      printf("\n\n 1)Enter command \n 3)Exit\nEnter option no :");
-      scanf("%d",&op);
-      if(op==3)
-        return;
-      printf("\nEnter Query (give ; after a space): ");
-       scanf("%s",q2);
-                    while(strcmp(q2,";")!=0)
-                    {
-                        if(strcmp(q2,"select")==0)
-                           flag=1;
-                        strcat(query,q2);
-                        strcat(query," ");
-                        scanf("%s",q2);
-                    }
-                    
-  
-   
-   strcat(query,";");
-   printf("\nCommand Entered:  %s\n",query);
-   printf("\n\n\n");
-   if (mysql_query(conn,query)) 
-   {
+    if (mysql_query(conn,"select CID,JobId from Offers where Verified='P'")) 
+    {
       fprintf(stderr, "%s\n", mysql_error(conn));
       return;
-   }
+    }
+    
    res = mysql_use_result(conn);
 
+   printf("%44.*s",50,"\n\n               CID                 JobID\n");
    unsigned long *lengths;
    unsigned int num_fields;
-
-
 
          while ((row = mysql_fetch_row(res)) != NULL)
           {
             num_fields = mysql_num_fields(res);
             lengths = mysql_fetch_lengths(res);
             for(int i = 0; i < num_fields; i++)
-            {
-               //printf("%d  ",(int)lengths[i]);
-               //printf("%s\t",row[i]);
-               printf("%18.*s ", (int) lengths[i],row[i] ? row[i] : "NULL");
-               // printf("Column %u is %lu bytes in length.\n",i, lengths[i]);
-               	//printf("%s \n", row[i]);
-            }
+                printf("%18.*s ", (int) lengths[i],row[i] ? row[i] : "NULL");
+              
+        
             printf("\n");
          }
  
  
-
-   
-   
-
    mysql_free_result(res);
+   printf("\n\nValidate JobIDs?(y/n) : ");
+   scanf(" %c",&val);
+   
+   
+   while(val=='y' || val=='Y')
+   {
+        printf("\n\n  Enter JobId: ");
+        scanf("%s",jid);
+        strcat(query,"UPDATE Offers SET Verified='Y' where JobId=");
+        strcat(query,jid);
+        strcat(query," ;");
+        
+        if (mysql_query(conn,query)) 
+        {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+        return;
+        }
+        
+        printf("Validate JobIDs?(y/n) : ");
+        scanf(" %c",&val);
+   
+   }
+   
+
+  
+    mysql_close(conn);
 
 }
 
 
 
 
-int main()
+void Companies()
 {
- 
-   conn = mysql_init(NULL);
 
-   /* Connect to database */
-   if (!mysql_real_connect(conn, server,
-         user, password, database, 0, NULL, 0)) {
+    conn = mysql_init(NULL);
+    system ("clear");
+    char val;
+    char jid[3];
+    
+    
+    if (!mysql_real_connect(conn, server,user, password, database, 0, NULL, 0)) 
+    {
       fprintf(stderr, "%s\n", mysql_error(conn));
       exit(1);
-   }
-   
-   
- 
-CompanyDatabase();
-SPPDatabase();
+    }
+    
+    mysql_query(conn,"use Admin;");
+  
+    if (mysql_query(conn,"select Username from CompanyUsers ")) 
+    {
+      fprintf(stderr, "%s\n", mysql_error(conn));
+      return;
+    }
+    
+   res = mysql_use_result(conn);
 
-  mysql_close(conn);
+   printf("%44.*s",50,"\n\n               CID\n");
+   unsigned long *lengths;
+   unsigned int num_fields;
+
+         while ((row = mysql_fetch_row(res)) != NULL)
+          {
+            num_fields = mysql_num_fields(res);
+            lengths = mysql_fetch_lengths(res);
+            for(int i = 0; i < num_fields; i++)
+                printf("%18.*s ", (int) lengths[i],row[i] ? row[i] : "NULL");
+              
+        
+            printf("\n");
+         }
+ 
+ 
+   mysql_free_result(res);
+   
+   printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n Press any key to go back ");
+   scanf(" %c",&query[0]);
+   
+
+}
+
+
+
+void AdminSchema()
+{
+    int op;
+    
+   
+    while (1)
+    {
+        system("clear");
+        printf("\n\n \t\t\t\t\tADMIN MENU\n\n");
+        printf("__________________________________________________________________________________________________________________________________________________________________");
+        
+        printf("\n\n\n\n\n\t 1)Check for new Job Requests\n\t 2)Display Companies\n\t 3)Exit\n\tEnter your choice:  ");
+        scanf("%d",&op);
+        switch(op)
+        {
+            case 1: Job();break;
+            case 2: Companies();break;
+            case 3:return;
+        }
+    } 
+}
+
+
+
+
+ 
+ void AdminLogin(int n)
+ {
+    char pass[10];
+    system ("clear");
+     printf("\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t  -----------------------------");
+     printf("                  \n\t\t\t\t\t\t\t\t  |                           |");
+     printf("                  \n\t\t\t\t\t\t\t\t  |         Admin Mode        |");
+     printf("                  \n\t\t\t\t\t\t\t\t  |                           |");
+     printf("                  \n\t\t\t\t\t\t\t\t  -----------------------------");
+     
+     if(n)
+        printf("\n\n\t\t\t\t\t\t\t\t   Invalid Password!!!! Enter again!\n");
+     printf("\n\n\t\t\t\t\t\t\t\t   Enter Password: ");
+     
+     scanf("%s",pass);
+     if(strcmp(pass,"abc")==0)
+        AdminSchema();
+     else
+        {
+         AdminLogin(1);        
+        }
+ 
+ }
+ 
+
+  
+   
+
+
+int main()
+{
+    AdminLogin(0);
+
+ 
+    //CompanyDatabase();
+    //SPPDatabase();
+
+
 return 0;
 }
